@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Site</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Movie Site</h1>
+    </header>
+    <main>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search movies...">
+            <button id="searchButton" class="search-button">Search</button>
+        </div>
+        <div class="container" id="movieContainer">
+            <!-- Example of initial 9 rows with 3 columns each -->
+            <div class="row">
+                <div class="column">
+                    <img class="movie-poster" src="assets/Straight_Outta_Compton_poster.jpg" alt="Movie 1 Poster">
+                    <div class="movie-title">Straight Outta Compton</div>
+                    <div class="movie-description">In 1988, a groundbreaking new group revolutionizes music and pop culture, changing and influencing hip-hop forever. N.W.A's first studio album, "Straight Outta Compton," stirs controversy with its brutally honest depiction of life in Southern Los Angeles. With guidance from veteran manager Jerry Heller, band members Ice Cube (O'Shea Jackson Jr.), Dr. Dre (Corey Hawkins), Eazy-E, DJ Yella and MC Ren navigate their way through the industry, acquiring fame, fortune and a place in history.</div>
+                    <a class="buy-button" href="https://drive.google.com/file/d/1-GWXU9rBiXSIcIkdY8362QYQmB6N-WDO/view" target="_blank">Watch Now</a>
+                </div>
+                <!-- Add more initial columns as needed -->
+                <div class="column">
+                    <img class="movie-poster" src="assets/Inside_Out.jpg" alt="Movie 1 Poster">
+                    <div class="movie-title">Inside Out</div>
+                    <div class="movie-description">Soon!</div>
+                    <a class="buy-button" href="https://drive.google.com/file/d/error/view" target="_blank">Watch Now</a>
+                </div>
+            </div>
+        </div>
+        <button class="show-more-button" id="showMoreButton">Show More</button>
+    </main>
+    <footer>
+        <p>&copy; 2024 Movie Site</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
