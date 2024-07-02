@@ -44,19 +44,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function filterMoviesBySearch(searchTerm) {
         const columns = document.querySelectorAll('.column');
+        let visibleMovies = 0;
         columns.forEach(column => {
             const title = column.querySelector('.movie-title').textContent.trim().toLowerCase();
-            const description = column.querySelector('.movie-description').textContent.trim().toLowerCase();
+            const description = column.querySelector('.movie-description') ? column.querySelector('.movie-description').textContent.trim().toLowerCase() : '';
             if (title.includes(searchTerm) || description.includes(searchTerm)) {
                 column.style.display = 'block';
+                visibleMovies++;
             } else {
                 column.style.display = 'none';
             }
         });
 
-        // Reset moviesToShow and display "Show More" button
-        moviesToShow = 9;
-        showMoreButton.style.display = 'inline-block';
+        // Adjust moviesToShow and display "Show More" button if necessary
+        moviesToShow = Math.min(9, visibleMovies);
         showMovies();
     }
 

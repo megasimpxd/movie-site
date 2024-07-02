@@ -1,43 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Site</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <header>
         <h1>Movie Site</h1>
     </header>
-    <main>
+    <main id="mainContent" style="display:none;">
         <div class="search-container">
             <input type="text" id="searchInput" class="search-input" placeholder="Search movies...">
             <button id="searchButton" class="search-button">Search</button>
         </div>
         <div class="container" id="movieContainer">
-            <!-- Example of initial 9 rows with 3 columns each -->
             <div class="row">
                 <div class="column">
-                    <img class="movie-poster" src="assets/Straight_Outta_Compton_poster.jpg" alt="Movie 1 Poster">
+                    <img class="movie-poster" src="assets/MV5BMTA5MzkyMzIxNjJeQTJeQWpwZ15BbWU4MDU0MDk0OTUx._V1_FMjpg_UX1000_.jpg" alt="Straight Outta Compton Poster">
                     <div class="movie-title">Straight Outta Compton</div>
-                    <div class="movie-description"></div>
+                    <div class="movie-description">A chronicle of the rise of N.W.A.</div>
                     <a class="buy-button" href="https://drive.google.com/file/d/1-GWXU9rBiXSIcIkdY8362QYQmB6N-WDO/view" target="_blank">Watch Now</a>
                 </div>
-                <!-- Add more initial columns as needed -->
                 <div class="column">
-                    <img class="movie-poster" src="assets/Inside_Out.jpg" alt="Movie 1 Poster">
-                    <div class="movie-title">Inside Out</div>
-                    <div class="movie-description"></div>
-                    <a class="buy-button" href="https://drive.google.com/file/d/error/view" target="_blank">Watch Now</a>
+                    <img class="movie-poster" src="assets/goodburger.jpg" alt="Good Burger Poster">
+                    <div class="movie-title">Good Burger</div>
+                    <div class="movie-description">Two dim-witted teenagers...</div>
+                    <a class="buy-button" href="https://drive.google.com/file/d/1VFeL-yx81NKc5-SwoTlnUgT7i4M9IYYV/view?usp=drive_link" target="_blank">Watch Now</a>
                 </div>
                 <div class="column">
-                    <img class="movie-poster" src="assets/Inside_Out.jpg" alt="Movie 1 Poster">
+                    <img class="movie-poster" src="assets/Inside_Out.jpg" alt="Inside Out Poster">
                     <div class="movie-title">Inside Out</div>
-                    <div class="movie-description"></div>
+                    <div class="movie-description">After young Riley is uprooted...</div>
                     <a class="buy-button" href="https://drive.google.com/file/d/error/view" target="_blank">Watch Now</a>
                 </div>
-                
+                <!-- Add more columns as needed -->
             </div>
         </div>
         <button class="show-more-button" id="showMoreButton">Show More</button>
@@ -46,6 +47,44 @@
         <p>&copy; 2024 Movie Site</p>
     </footer>
 
+    <div id="forbiddenMessage" style="display:none;">
+        <p>You are not allowed to access this site.</p>
+    </div>
+
+    <script>
+        const allowedIp = '1';
+        const mainContent = document.getElementById('mainContent');
+        const forbiddenMessage = document.getElementById('forbiddenMessage');
+
+        async function checkAccess() {
+            try {
+                const statusResponse = await fetch('status.txt');
+                const status = await statusResponse.text();
+
+                if (status.trim() === 'onbreak') {
+                    mainContent.style.display = 'block';
+                } else if (status.trim() === 'notbreak') {
+                    const ipResponse = await fetch('https://api.ipify.org?format=json');
+                    const data = await ipResponse.json();
+                    
+                    if (data.ip === allowedIp) {
+                        mainContent.style.display = 'block';
+                    } else {
+                        forbiddenMessage.style.display = 'block';
+                    }
+                } else {
+                    forbiddenMessage.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error fetching status or IP information:', error);
+                forbiddenMessage.style.display = 'block';
+            }
+        }
+
+        checkAccess();
+    </script>
+
     <script src="script.js"></script>
 </body>
+
 </html>

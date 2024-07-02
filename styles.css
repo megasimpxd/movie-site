@@ -1,26 +1,46 @@
-body {
-    font-family: Arial, sans-serif;
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
 }
 
-* {
-    box-sizing: border-box;
+body {
+    display: flex;
+    flex-direction: column;
+    background: url('assets/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
 }
 
 header, footer {
     text-align: center;
     padding: 1em;
-    background-color: #333;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
     color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2em 1em;
 }
 
 .container {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2em;
+    border-radius: 15px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1em;
-    padding: 1em;
+    gap: 2em;
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: auto; /* Pushes the footer to the bottom if content is short */
 }
 
 .row {
@@ -29,26 +49,39 @@ header, footer {
 
 .column {
     position: relative;
-    background-color: #f4f4f4;
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
     padding: 1em;
     border: 1px solid #ddd;
     text-align: center;
     overflow: hidden;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .column:hover {
     transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .movie-poster {
     max-width: 100%;
     height: auto;
     margin-bottom: 1em;
+    transition: transform 0.3s ease;
 }
 
-.movie-title,
-.movie-description {
+.movie-poster:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.movie-title {
+    font-family: 'Playfair Display', serif;
+    color: #333; /* Darker color for better readability */
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+    padding: 0.5em;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for better contrast */
     opacity: 0;
     transform: translateY(10px);
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
@@ -60,22 +93,41 @@ header, footer {
     transform: translateY(0);
 }
 
+.movie-description {
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 0.5em;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 0.5em;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
 .buy-button, .show-more-button {
     padding: 0.5em 1em;
-    background-color: #28a745;
+    background: linear-gradient(to right, #56ab2f, #a8e063);
     color: white;
     border: none;
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, transform 0.2s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 25px;
+    transition: background 0.3s ease, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .buy-button:hover, .show-more-button:hover {
-    background-color: #218838;
+    background: linear-gradient(to right, #3c9d0b, #6ddf46);
     transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.buy-button:focus, .show-more-button:focus,
+.search-button:focus {
+    outline: 2px solid #0056b3;
+    outline-offset: 2px;
 }
 
 .search-container {
@@ -87,6 +139,10 @@ header, footer {
     padding: 0.5em;
     width: 300px;
     margin-right: 1em;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .search-button {
@@ -97,9 +153,9 @@ header, footer {
     cursor: pointer;
     text-decoration: none;
     font-size: 1em;
-    border-radius: 4px;
+    border-radius: 25px;
     transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .search-button:hover {
@@ -122,6 +178,9 @@ header, footer {
     text-decoration: none;
     margin-top: 1em;
     display: none; /* Initially hidden */
+    border-radius: 25px;
+    transition: background 0.3s ease, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .show-more-button:hover {
