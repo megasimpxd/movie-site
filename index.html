@@ -19,7 +19,7 @@
             <button id="searchButton" class="search-button">Search</button>
         </div>
         <div class="container" id="movieContainer">
-            <div class="row">
+            <div class="row" id="movieRow">
                 <div class="column">
                     <img class="movie-poster" src="assets/MV5BMTA5MzkyMzIxNjJeQTJeQWpwZ15BbWU4MDU0MDk0OTUx._V1_FMjpg_UX1000_.jpg" alt="Straight Outta Compton Poster">
                     <div class="movie-title">Straight Outta Compton</div>
@@ -56,39 +56,6 @@
     <div id="forbiddenMessage" style="display:none;">
         <p>You are not allowed to access this site.</p>
     </div>
-
-    <script>
-        const allowedIp = '1';
-        const mainContent = document.getElementById('mainContent');
-        const forbiddenMessage = document.getElementById('forbiddenMessage');
-
-        async function checkAccess() {
-            try {
-                const statusResponse = await fetch('status.txt');
-                const status = await statusResponse.text();
-
-                if (status.trim() === 'onbreak') {
-                    mainContent.style.display = 'block';
-                } else if (status.trim() === 'notbreak') {
-                    const ipResponse = await fetch('https://api.ipify.org?format=json');
-                    const data = await ipResponse.json();
-                    
-                    if (data.ip === allowedIp) {
-                        mainContent.style.display = 'block';
-                    } else {
-                        forbiddenMessage.style.display = 'block';
-                    }
-                } else {
-                    forbiddenMessage.style.display = 'block';
-                }
-            } catch (error) {
-                console.error('Error fetching status or IP information:', error);
-                forbiddenMessage.style.display = 'block';
-            }
-        }
-
-        checkAccess();
-    </script>
 
     <script src="script.js"></script>
 </body>

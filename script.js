@@ -1,4 +1,51 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const allowedIp = '1';
+    const mainContent = document.getElementById('mainContent');
+    const forbiddenMessage = document.getElementById('forbiddenMessage');
+
+    async function checkAccess() {
+        try {
+            const statusResponse = await fetch('status.txt');
+            const status = await statusResponse.text();
+
+            if (status.trim() === 'onbreak') {
+                mainContent.style.display = 'block';
+            } else if (status.trim() === 'notbreak') {
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const data = await ipResponse.json();
+                
+                if (data.ip === allowedIp) {
+                    mainContent.style.display = 'block';
+                } else {
+                    forbiddenMessage.style.display = 'block';
+                }
+            } else {
+                forbiddenMessage.style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Error fetching status or IP information:', error);
+            forbiddenMessage.style.display = 'block';
+        }
+    }
+
+    checkAccess();
+
+    function shuffleColumns() {
+        const container = document.getElementById('movieRow');
+        const columns = Array.from(container.getElementsByClassName('column'));
+
+        // Shuffle array
+        for (let i = columns.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [columns[i], columns[j]] = [columns[j], columns[i]];
+        }
+
+        // Append shuffled columns back to container
+        columns.forEach(column => container.appendChild(column));
+    }
+
+    shuffleColumns();
+
     const showMoreButton = document.getElementById('showMoreButton');
     const searchInput = document.getElementById('searchInput');
     const searchButton = document.getElementById('searchButton');
