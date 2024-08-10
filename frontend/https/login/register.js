@@ -1,10 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Initialize PlayFab
-    const playFabSettings = {
-        titleId: '48127'  // Replace with your actual title ID
-    };
-
-    PlayFab.settings.titleId = playFabSettings.titleId;
+    // Replace with your PlayFab title ID
+    const playFabTitleId = '48127';
 
     const registerForm = document.getElementById('registerForm');
     const errorMessage = document.getElementById('error-message');
@@ -16,25 +12,42 @@ document.addEventListener('DOMContentLoaded', function () {
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
 
-        // Register new user
+        // Register the user with PlayFab
         registerUser(username, email, password);
     });
 
-    function registerUser(username, email, password) {
-        const request = {
+    async function registerUser(username, email, password) {
+        const requestPayload = {
+            TitleId: playFabTitleId,
             Username: username,
             Email: email,
-            Password: password
+            Password: password,
+            RequireBothUsernameAndEmail: true
         };
 
-        PlayFab.ClientApi.RegisterPlayFabUser(request, function (result, error) {
-            if (result) {
-                // Registration successful, redirect or show success message
-                window.location.href = 'index.html'; // Redirect to login page
+        try {
+            const response = await fetch(`https://${playFabTitleId}.playfabapi.com/Client/RegisterPlayFabUser`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestPayload)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                // Registration successful, redirect to login page
+                window.location.href = 'index.html';
             } else {
                 // Show error message
+                errorMessage.textContent = result.errorMessage || "Registration failed. Please try again.";
                 errorMessage.classList.remove('hidden');
             }
-        });
+        } catch (error) {
+            console.error('Error registering user:', error);
+            errorMessage.textContent = "An error occurred. Please try again.";
+            errorMessage.classList.remove('hidden');
+        }
     }
 });

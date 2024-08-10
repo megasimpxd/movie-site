@@ -1,38 +1,47 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Initialize PlayFab
     const playFabSettings = {
-        titleId: '48127'  // Replace with your actual title ID
+        titleId: '48127'
     };
-
-    PlayFab.settings.titleId = playFabSettings.titleId;
 
     const loginForm = document.getElementById('loginForm');
     const errorMessage = document.getElementById('error-message');
 
     loginForm.addEventListener('submit', function (event) {
-        event.preventDefault();  // Prevent default form submission
+        event.preventDefault();
 
         const username = document.getElementById('username').value.trim();
         const password = document.getElementById('password').value;
 
-        // Login user
         loginUser(username, password);
     });
 
-    function loginUser(username, password) {
-        const request = {
-            Username: username,
-            Password: password
-        };
+    async function loginUser(username, password) {
+        try {
+            const response = await fetch(`https://${playFabSettings.titleId}.playfabapi.com/Client/LoginWithPlayFab`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-PlayFabSDK': 'JavascriptSDK-1.0.0'
+                },
+                body: JSON.stringify({
+                    Username: username,
+                    Password: password,
+                    TitleId: playFabSettings.titleId
+                })
+            });
 
-        PlayFab.ClientApi.LoginWithPlayFab(request, function (result, error) {
-            if (result) {
-                // Login successful, redirect or show success message
-                window.location.href = '/'; // Redirect to a dashboard or main page
+            const result = await response.json();
+
+            if (response.ok && result.data) {
+                window.location.href = 'dashboard.html';
             } else {
-                // Show error message
+                errorMessage.textContent = result.errorMessage || 'Invalid username or password';
                 errorMessage.classList.remove('hidden');
             }
-        });
+        } catch (error) {
+            console.error('Error during login:', error);
+            errorMessage.textContent = 'An error occurred. Please try again later.';
+            errorMessage.classList.remove('hidden');
+        }
     }
 });
