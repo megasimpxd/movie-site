@@ -1,12 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Replace with your PlayFab title ID
-    const playFabTitleId = '48127';
+    const playFabTitleId = '48127';  // Replace with your actual PlayFab Title ID
 
     const registerForm = document.getElementById('registerForm');
     const errorMessage = document.getElementById('error-message');
 
     registerForm.addEventListener('submit', function (event) {
-        event.preventDefault();  // Prevent default form submission
+        event.preventDefault();  // Prevent default form submission behavior
 
         const username = document.getElementById('username').value.trim();
         const email = document.getElementById('email').value.trim();
@@ -36,9 +35,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const result = await response.json();
 
-            if (response.ok) {
+            if (response.ok && result.data) {
                 // Registration successful, redirect to login page
-                window.location.href = 'index.html';
+                window.location.href = 'login.html';
             } else {
                 // Show error message
                 errorMessage.textContent = result.errorMessage || "Registration failed. Please try again.";
